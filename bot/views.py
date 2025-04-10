@@ -68,10 +68,10 @@ def song_recommendation(request):
     if request.method == "POST":
         body = json.loads(request.body)
         user_input = body.get("message", "")
-        hf_response = build_prompt(user_input)
+     
 
         result = query({
-            "inputs": hf_response
+            "inputs": user_input
         })
 
         return JsonResponse(result, safe=False)
