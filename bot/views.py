@@ -20,16 +20,6 @@ def telegram_webhook(request):
         ai_response = response.json()
 
 
-        # if chat_id:
-        #     if text == "/start":
-        #         message = 'Hi! The bot lets you to access the best music\
-        #               according to your mood!Let\'s start, type your current mood.'
-            
-        #     requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", data={
-        #         'chat_id' : chat_id,
-        #         'text' : message
-        #     })
-
         ai_response = query({
             "inputs": text
         })
@@ -61,7 +51,7 @@ def send_telegram_message(chat_id, text):
 # Use Cerebras API
 
 HF_TOKEN = "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"
-API_URL = "https://api-inference.huggingface.co/models/cerebras/btlm-3b-8k-base"
+API_URL = "https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct"
 
 headers = {
     "Authorization": f"Bearer {HF_TOKEN}"
