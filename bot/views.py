@@ -21,7 +21,7 @@ def telegram_webhook(request):
 
 
         ai_response = query({
-            "inputs": text
+            "inputs": build_prompt(text) #*************
         })
 
         if text=="/start":
@@ -69,7 +69,7 @@ def song_recommendation(request):
         body = json.loads(request.body)
         user_input = body.get("message", "")
         hf_response = build_prompt(user_input)
-        
+
         result = query({
             "inputs": hf_response
         })
