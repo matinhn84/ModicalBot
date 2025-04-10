@@ -16,8 +16,7 @@ def telegram_webhook(request):
 
         if chat_id:
             if text == "/start":
-                message = 'Hi, im an ai model that help you to find music According to your mood!\n\
-                    Let''start, describe your mood.'
+                message = 'Hi! The bot lets you to access the best music according to your mood!Let\'s start, type your current mood.'
             else:
                 message = f'You said: {text}'
             
