@@ -14,10 +14,16 @@ def telegram_webhook(request):
         chat_id = data.get("message", {}).get("chat", {}).get("id")
         text = data.get("message", {}).get("text")
 
-        if chat_id and text:
+        if chat_id:
+            if text == "/start":
+                message = 'Hi, im an ai model that help you to find music According to your mood!\n\
+                    Let''start, describe your mood.'
+            else:
+                message = f'You said: {text}'
+            
             requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", data={
-                "chat_id": chat_id,
-                "text": "تو گفتی: " + text
+                'chat_id' : chat_id,
+                'text' : message
             })
 
         return JsonResponse({"status": "ok"})
