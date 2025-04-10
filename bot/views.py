@@ -28,7 +28,9 @@ def telegram_webhook(request):
             response_text = "Hi! The bot lets you to access the best music\
                 according to your mood!Let\'s start, type your current mood."
         else:
-            response_text = ai_response[0]["generated_text"] if isinstance(ai_response, list) else "Sorry! can\'t understand!🤔"
+            response_text = ai_response[0]["generated_text"]\
+                 if isinstance(ai_response, list)\
+                     else "Sorry! can\'t understand!🤔"
 
         # response
         send_telegram_message(chat_id, response_text)
@@ -66,9 +68,10 @@ def song_recommendation(request):
     if request.method == "POST":
         body = json.loads(request.body)
         user_input = body.get("message", "")
-
+        hf_response = build_prompt(user_input)
+        
         result = query({
-            "inputs": user_input
+            "inputs": hf_response
         })
 
         return JsonResponse(result, safe=False)
@@ -80,6 +83,8 @@ def build_prompt(user_input):
     return f"""
 You are an AI that suggests songs based on the user's mood.
 User's mood: "I feel lonely and nostalgic"
+
+{user_input}
 
 Only return in this format:
 Song: [song name]
