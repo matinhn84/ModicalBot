@@ -30,7 +30,7 @@ def telegram_webhook(request):
         #         'text' : message
         #     })
 
-        i_response = query({
+        ai_response = query({
             "inputs": text
         })
 
