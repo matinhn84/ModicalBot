@@ -7,7 +7,7 @@ import json
 TOKEN = '7687944134:AAExhPl0bOBKI2ID_qsi4fzEDVDhOW5urLw'
 
 HF_TOKEN = "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"
-API_URL = "https://api-inference.huggingface.co/models/cerebras/Cerebras-GPT-2.7B"
+API_URL = "https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct"
 
 headers = {
     "Authorization": f"Bearer {HF_TOKEN}",
