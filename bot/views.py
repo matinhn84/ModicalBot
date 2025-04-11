@@ -12,6 +12,8 @@ def telegram_webhook(request):
         data = json.loads(request.body)
         print(data)
 
+        send_telegram_message(chat_id, "Moodical is working on you request.\nPlease wait a moment...")
+
         chat_id = data["message"]["chat"]["id"]
         text = data["message"]["text"]
 
@@ -93,4 +95,5 @@ You do not need to match the language of the music to the language I use
 If I describe a specific type of music (e.g., “a calm track with violin that feels like Goodbye Brother”), suggest songs that are similar in mood, instrumentation, or style
 Always list songs using this exact format: [music title] – [artist]
 Keep your replies short and focused on the music — avoid long explanations unless I explicitly ask
+
 """
