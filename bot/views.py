@@ -25,7 +25,6 @@ def telegram_webhook(request):
             prompt = build_prompt(text)
             try:
                 ai_response = query(prompt)
-                print(f"*****{ai_response}*****")
 
                 if "choices" in ai_response and len(ai_response["choices"]) > 0:
                     generated = ai_response["choices"][0]["message"]["content"]
