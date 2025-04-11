@@ -81,6 +81,7 @@ def query(user_prompt):
 
 def build_prompt(user_input):
     return f"""
+اگر پرامپت فارسی بود فارسی جواب بده.
 Respond using the same language I use in my message, except for the song titles which should always be in English
 You are an emotionally intelligent music assistant.
 When I describe my feelings, situations, or experiences (e.g., "I was stuck in traffic and got fired today"), you must:
