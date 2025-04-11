@@ -24,16 +24,11 @@ def telegram_webhook(request):
         else:
             prompt = build_prompt(text)
             try:
-                ai_response = query({
-                    "inputs": prompt
-                })
+                ai_response = query(prompt)
                 print(f"*****{ai_response}*****")
-                if isinstance(ai_response, list) and "generated_text" in ai_response[0]:
-                    generated = ai_response[0]["generated_text"]
 
-                    # حذف prompt از ابتدای خروجی
-                    if generated.startswith(prompt):
-                        generated = generated[len(prompt):].strip()
+                if "choices" in ai_response and len(ai_response["choices"]) > 0:
+                    generated = ai_response["choices"][0]["message"]["content"]
 
                     response_text = generated if generated else "Sorry! couldn't generate a song 🎵"
                 else:
@@ -51,8 +46,7 @@ def telegram_webhook(request):
 
 
 def send_telegram_message(chat_id, text):
-    TELEGRAM_TOKEN = "7687944134:AAExhPl0bOBKI2ID_qsi4fzEDVDhOW5urLw"
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
     payload = {
         "chat_id": chat_id,
         "text": text
@@ -71,9 +65,17 @@ headers = {
     "HTTP-Referer": "https://yourproject.com"
 }
 
-def query(payload):
+def query(user_prompt):
+    payload = {
+        "model": "google/gemini-pro",
+        "messages": [
+            {"role": "user", "content": user_prompt}
+        ]
+    }
     response = requests.post(API_URL, headers=headers, json=payload)
+    response.raise_for_status()  
     return response.json()
+
 
 
 
