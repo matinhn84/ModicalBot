@@ -16,7 +16,7 @@ def telegram_webhook(request):
         text = data["message"]["text"]
 
         processing_msg  = send_telegram_message(chat_id, "prosseccing...")
-        message_id = processing_msg["result"]["message_id"]
+        message_id = processing_msg["ai_response"]["message_id"]
 
         # send view to hugging face
 
