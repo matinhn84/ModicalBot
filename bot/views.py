@@ -16,7 +16,7 @@ def telegram_webhook(request):
         text = data["message"]["text"]
 
         processing_msg  = send_telegram_message(chat_id, "prosseccing...")
-        message_id = processing_msg["ai_response"]["message_id"]
+        message_id = processing_msg["result"]["message_id"]
 
         # send view to hugging face
 
@@ -54,7 +54,8 @@ def send_telegram_message(chat_id, text):
         "chat_id": chat_id,
         "text": text
     }
-    requests.post(url, json=payload)
+    response = requests.post(url, json=payload)
+    return response.json()
 
 def delete_telegram_message(chat_id, message_id):
     url = f"https://api.telegram.org/bot{TOKEN}/deleteMessage"
