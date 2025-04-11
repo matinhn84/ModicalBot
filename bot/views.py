@@ -27,7 +27,7 @@ def telegram_webhook(request):
                 ai_response = query({
                     "inputs": prompt
                 })
-
+                print(f"*****{ai_response}*****")
                 if isinstance(ai_response, list) and "generated_text" in ai_response[0]:
                     generated = ai_response[0]["generated_text"]
 
