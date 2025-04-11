@@ -28,7 +28,7 @@ def telegram_webhook(request):
             response_text = "Hi! The bot lets you to access the best music\
                 according to your mood!Let\'s start, type your current mood."
         else:
-            response_text = ["generated_text"]\
+            response_text = ai_response["generated_text"]\
                  if isinstance(ai_response, list)\
                      else "Sorry! can\'t understand!🤔"
 
