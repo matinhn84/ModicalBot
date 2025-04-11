@@ -93,6 +93,7 @@ Respond to me in the same language I use in my prompt, except for the song title
 
 Do not add explanations unless I ask for them.
 
+main prompt:
 "{user_input}"
 
 """
