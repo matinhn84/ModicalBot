@@ -15,6 +15,9 @@ def telegram_webhook(request):
         chat_id = data["message"]["chat"]["id"]
         text = data["message"]["text"]
 
+        processing_msg  = send_telegram_message(chat_id, "prosseccing...")
+        message_id = processing_msg["result"]["message_id"]
+
         # send view to hugging face
 
 
@@ -22,7 +25,7 @@ def telegram_webhook(request):
             response_text = "Hi! The bot lets you to access the best music\
                 according to your mood!Let\'s start, type your current mood."
         else:
-            send_telegram_message(chat_id, "prosseccing...")
+            processing_msg
             prompt = build_prompt(text)
             try:
                 ai_response = query(prompt)
@@ -38,6 +41,7 @@ def telegram_webhook(request):
                 print("AI error:", e)
                 response_text = "Something went wrong with AI model! 😔"
         # response
+        delete_telegram_message(chat_id, message_id)
         send_telegram_message(chat_id, response_text)
 
         return JsonResponse({"status": "ok"})
@@ -53,8 +57,14 @@ def send_telegram_message(chat_id, text):
     }
     requests.post(url, json=payload)
 
+def delete_telegram_message(chat_id, message_id):
+    url = f"https://api.telegram.org/bot{TOKEN}/deleteMessage"
+    payload = {
+        "chat_id": chat_id,
+        "message_id": message_id,
+    }
+    requests.post(url, json=payload)
 
-# Use Cerebras API
 
 HF_TOKEN = "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"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
