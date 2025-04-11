@@ -12,7 +12,7 @@ def telegram_webhook(request):
         data = json.loads(request.body)
         print(data)
 
-        send_telegram_message(chat_id, "Moodical is working on you request.\nPlease wait a moment...")
+        pricessing_message = send_telegram_message(chat_id, "Moodical is working on you request.\nPlease wait a moment...")
 
         chat_id = data["message"]["chat"]["id"]
         text = data["message"]["text"]
