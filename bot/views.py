@@ -62,11 +62,13 @@ def send_telegram_message(chat_id, text):
 
 # Use Cerebras API
 
-HF_TOKEN = "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"
-API_URL = "https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct"
+HF_TOKEN = "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"
+API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 headers = {
-    "Authorization": f"Bearer {HF_TOKEN}"
+    "Authorization": f"Bearer {HF_TOKEN}",
+    "Content-Type": "application/json",
+    "HTTP-Referer": "https://yourproject.com"
 }
 
 def query(payload):
