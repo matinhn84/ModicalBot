@@ -18,23 +18,30 @@ def telegram_webhook(request):
         # send view to hugging face
 
 
-
-        ai_response = query({
-            "inputs": build_prompt(text) #*************
-        })
-
         if text=="/start":
             response_text = "Hi! The bot lets you to access the best music\
                 according to your mood!Let\'s start, type your current mood."
         else:
+            prompt = build_prompt(text)
             try:
-                response_text = ai_response[0]["generated_text"]\
-                    if isinstance(ai_response, list)\
-                        else "Sorry! can\'t understand!🤔"
+                ai_response = query({
+                    "inputs": prompt
+                })
+
+                if isinstance(ai_response, list) and "generated_text" in ai_response[0]:
+                    generated = ai_response[0]["generated_text"]
+
+                    # حذف prompt از ابتدای خروجی
+                    if generated.startswith(prompt):
+                        generated = generated[len(prompt):].strip()
+
+                    response_text = generated if generated else "Sorry! couldn't generate a song 🎵"
+                else:
+                    response_text = "Sorry! can't understand!🤔"
+
             except Exception as e:
                 print("AI error:", e)
                 response_text = "Something went wrong with AI model! 😔"
-
         # response
         send_telegram_message(chat_id, response_text)
 
