@@ -25,7 +25,6 @@ def telegram_webhook(request):
             response_text = "Hi! The bot lets you to access the best music\
                 according to your mood!Let\'s start, type your current mood."
         else:
-            processing_msg
             prompt = build_prompt(text)
             try:
                 ai_response = query(prompt)
