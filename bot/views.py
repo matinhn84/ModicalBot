@@ -2,8 +2,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from .telegram.utils import send_telegram_message, delete_telegram_message
+from .telegram.utils import send_telegram_message, delete_telegram_message, send_telegram_audio
 from .services.ai_model import query, build_prompt
+from .services.music_api import search_music
 
 @csrf_exempt
 def telegram_webhook(request):
@@ -26,12 +27,19 @@ def telegram_webhook(request):
         try:
             ai_response = query(prompt)
             generated = ai_response.get("choices", [{}])[0].get("message", {}).get("content", "")
-            response_text = generated or "Sorry! Couldn't generate a song 🎵"
+            response_text = generated or "Sorry! Couldn't find any song 🎵"
+            if generated:
+                song_info = search_music(generated)
+                mp3 = song_info['mp3']
+                title = song_info['title']
+                performer = song_info['artist']
+                thumb = song_info['thumbnail']
         except Exception as e:
             print("AI error:", e)
             response_text = "Something went wrong with AI model! 😔"
 
     delete_telegram_message(chat_id, message_id)
-    send_telegram_message(chat_id, response_text)
+    # send_telegram_message(chat_id, response_text)
+    send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
     return JsonResponse({"status": "ok"})
