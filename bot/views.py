@@ -4,7 +4,7 @@ import json
 
 from .telegram.utils import send_telegram_message, delete_telegram_message, send_telegram_audio
 from .services.ai_model import query, build_prompt
-from .services.music_api import search_music
+from .services.music_api import get_song_info
 
 @csrf_exempt
 def telegram_webhook(request):
@@ -27,9 +27,8 @@ def telegram_webhook(request):
         try:
             ai_response = query(prompt)
             generated = ai_response.get("choices", [{}])[0].get("message", {}).get("content", "")
-            response_text = generated or "Sorry! Couldn't find any song 🎵"
             if generated:
-                song_info = search_music(generated)
+                song_info = get_song_info(generated)
                 mp3 = song_info['mp3']
                 title = song_info['title']
                 performer = song_info['artist']
