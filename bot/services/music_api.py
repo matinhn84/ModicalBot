@@ -1,9 +1,9 @@
-# views/music_api.py
+# services/music_api.py
 import requests
-from rest_framework.decorators import api_view
+
 from rest_framework.response import Response
 
-@api_view(['GET'])
+
 def get_song_info(query):
 
     search_res = requests.get(f"https://saavn.dev/api/search?query={query}")

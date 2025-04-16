@@ -30,6 +30,7 @@ def telegram_webhook(request):
             if not generated:
                 return print("@@not generated!")
             song_info = get_song_info(generated)
+
             mp3 = song_info['mp3']
             title = song_info['title']
             performer = song_info['artist']
