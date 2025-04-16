@@ -24,7 +24,7 @@ def get_song_info(query):
         song_data = song_detail_res.json().get('data', []).get('results', [])
 
         download_urls = song_data[0].get('downloadUrl', [])
-        mp3_link = next((x['link'] for x in download_urls if x.get('quality') == '320kbps'), None)
+        mp3_link = next((x['url'] for x in download_urls if x.get('quality') == '320kbps'), None)
         if not mp3_link:
             return Response({'error': 'No mp3 link for this song!'}, status=404)
 
