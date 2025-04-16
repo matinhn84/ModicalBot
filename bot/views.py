@@ -37,7 +37,10 @@ def telegram_webhook(request):
             thumb = song_info['thumbnail']
 
         except Exception as e:
-            print("AI error:", e)
+            import traceback
+
+            print("AI error:", repr(e))
+            traceback.print_exc()
 
 
     delete_telegram_message(chat_id, message_id)
