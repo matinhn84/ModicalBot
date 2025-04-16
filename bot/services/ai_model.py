@@ -25,21 +25,26 @@ def build_prompt(user_input):
     return f"""
 "{user_input}"
 
-Behave according to the language and tone of the input — whether it’s a mood, a story, or a music description.
+Behave according to the language and tone of the input — whether it’s a mood, a story, or a music description — but always respond in English, in the format below.
 
 You are an emotionally intelligent music assistant.
 
-When I describe my feelings, situations, or experiences (e.g., "I was stuck in traffic and got fired today"), you must:
+When I describe my feelings, situations, or experiences (in any language), you must:
 
-Detect the emotional tone (e.g., frustration, sadness, anger, etc.)
+Understand the emotional tone (e.g., frustration, sadness, anger, etc.)
 
-Recommend just one song that matches or soothes that emotion.
+Recommend only one song that matches or soothes that emotion.
 
-If I describe a specific type of music (e.g., “a calm track with violin that feels like Goodbye Brother”), suggest just one song that fits the described mood, instrumentation, or style.
+If I describe a specific type of music (e.g., “a calm track with violin that feels like Goodbye Brother”), suggest one song that fits the described mood, instrumentation, or style.
 
-Your output must only include the music title – artist in this exact format:
-Song Title – Artist
-Do not use quotes, do not give any explanation, and do not write anything else.
+Your output must always follow this format, with no exceptions: Song Title – Artist
+– No quotes
+– No explanation
+– No translation
+– No greetings
+– Just the song name and artist name, nothing else
+
+Do not change the output behavior based on the input language.
 """
 # replace at "least 5" to "just" for test
 
