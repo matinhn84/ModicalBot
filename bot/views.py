@@ -28,18 +28,19 @@ def telegram_webhook(request):
             ai_response = query(prompt)
             generated = ai_response.get("choices", [{}])[0].get("message", {}).get("content", "")
             if generated:
-                response_text = generated
-                # song_info = get_song_info(generated)
-                # mp3 = song_info['mp3']
-                # title = song_info['title']
-                # performer = song_info['artist']
-                # thumb = song_info['thumbnail']
+                song_info = get_song_info(generated)
+                mp3 = song_info['mp3']
+                title = song_info['title']
+                performer = song_info['artist']
+                thumb = song_info['thumbnail']
+            else:
+                print('**********************error')
         except Exception as e:
             print("AI error:", e)
             response_text = "Something went wrong with AI model! 😔"
 
     delete_telegram_message(chat_id, message_id)
-    send_telegram_message(chat_id, response_text)
-    # send_telegram_audio(chat_id, mp3, title, performer, thumb)
+    # send_telegram_message(chat_id, response_text)
+    send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
     return JsonResponse({"status": "ok"})
