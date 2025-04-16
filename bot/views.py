@@ -18,6 +18,7 @@ def telegram_webhook(request):
     text = data["message"]["text"]
 
     processing_msg  = send_telegram_message(chat_id, "Processing...")
+    send_telegram_audio(chat_id, 'http://aac.saavncdn.com/377/b7359c713bb8eb400a817e4267722b98_320.mp4', 'Asemoon ma nemiai?', 'dashaq', "")
     message_id = processing_msg["result"]["message_id"]
 
     if text == "/start":
@@ -48,6 +49,7 @@ def telegram_webhook(request):
         print("AI error:", repr(e))
         traceback.print_exc()
         send_telegram_message(chat_id, "Something went wrong!")
+
 
 
     return JsonResponse({"status": "ok"})
