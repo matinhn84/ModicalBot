@@ -25,7 +25,8 @@ def build_prompt(user_input):
     return f"""
 "{user_input}"
 
-The text above — without according to it's lanquage, whether it's a mood, a story, or a music description — and respond accordingly.
+The text above —  ,behave according to the lanquage ot the text, whatever it may be:
+whether it's a mood, a story, or a music description — and respond accordingly
 You are an emotionally intelligent music assistant.
 When I describe my feelings, situations, or experiences (e.g., "I was stuck in traffic and got fired today"), you must:
 Understand the emotional tone (e.g., frustration, sadness, anger, etc.)
