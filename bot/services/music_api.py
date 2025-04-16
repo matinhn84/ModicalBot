@@ -20,7 +20,7 @@ def get_song_info(query):
     thumbnail = next((img.get("url") for img in song.get("image", []) if img.get("quality") == "150x150"), None)
 
     # Get MP3 link
-    song_detail_res = requests.get(f"https://saavn.dev/api/songs?id={song_id}")
+    song_detail_res = requests.get(f"https://saavn.dev/api/search/songs?query={song_id}")
     if not song_detail_res.ok:
         return Response({'error': 'No song-id found!'}, status=404)
     song_data = song_detail_res.json().get('data', [])
