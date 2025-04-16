@@ -34,8 +34,7 @@ Recommend just songs that match or soothe that emotion
 You do not need to match the language of the music to the language I use
 If I describe a specific type of music (e.g., “a calm track with violin that feels like Goodbye Brother”), suggest songs that are similar in mood, instrumentation, or style
 Always recommend music using this exact format: [music title] – [artist]
-No more explain and text
-
+Don't add any explanation at all!.
 """
 # replace at "least 5" to "just" for test
 
