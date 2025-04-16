@@ -40,7 +40,7 @@ def telegram_webhook(request):
 
 
     delete_telegram_message(chat_id, message_id)
-    send_telegram_message(chat_id, response_text)
+    # send_telegram_message(chat_id, response_text)
     send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
     return JsonResponse({"status": "ok"})
