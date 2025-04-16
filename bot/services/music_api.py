@@ -26,7 +26,7 @@ def get_song_info(query):
         download_urls = song_data[0].get('downloadUrl', [])
         mp3_link = download_urls[-1].get('url')
         if not mp3_link:
-            return Response({'error': 'No mp3 link for this song!'}, status=404)
+            return print('mp3_link not found!')
 
         return Response({
             'title': title,

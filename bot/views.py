@@ -24,28 +24,30 @@ def telegram_webhook(request):
         response_text = "Hi! The bot lets you access the best music according to your mood!\nType your current mood."
     else:
         prompt = build_prompt(text)
-        try:
-            ai_response = query(prompt)
-            generated = ai_response.get("choices", [{}])[0].get("message", {}).get("content", "")
-            if not generated:
-                return print("@@not generated!")
-            song_info = get_song_info(generated)
+    try:
+        ai_response = query(prompt)
+        generated = ai_response.get("choices", [{}])[0].get("message", {}).get("content", "")
+        if not generated:
+            raise ValueError("Empty AI result!")
 
+        song_info = get_song_info(generated)
+
+        if isinstance(song_info, dict):
             mp3 = song_info['mp3']
             title = song_info['title']
             performer = song_info['artist']
             thumb = song_info['thumbnail']
 
-        except Exception as e:
-            import traceback
+            send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
-            print("AI error:", repr(e))
-            traceback.print_exc()
-            error_res = send_telegram_message(chat_id, "Something goes wrong!")
+        else:
+            raise ValueError("song_info is not valid dict")
 
+    except Exception as e:
+        import traceback
+        print("AI error:", repr(e))
+        traceback.print_exc()
+        send_telegram_message(chat_id, "Something went wrong!")
 
-    delete_telegram_message(chat_id, message_id)
-    # send_telegram_message(chat_id, response_text)
-    send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
     return JsonResponse({"status": "ok"})
