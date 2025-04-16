@@ -41,6 +41,7 @@ def telegram_webhook(request):
 
             print("AI error:", repr(e))
             traceback.print_exc()
+            error_res = send_telegram_message(chat_id, "Something goes wrong!")
 
 
     delete_telegram_message(chat_id, message_id)
