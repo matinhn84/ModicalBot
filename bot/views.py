@@ -31,7 +31,7 @@ def telegram_webhook(request):
             raise ValueError("Empty AI result!")
 
         song_info = get_song_info(generated)
-
+ 
         if isinstance(song_info, dict):
             mp3 = song_info['mp3']
             title = song_info['title']

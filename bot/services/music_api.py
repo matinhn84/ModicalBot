@@ -23,10 +23,10 @@ def get_song_info(query):
         song_detail_res = requests.get(f"https://saavn.dev/api/search/songs?query={song_id}")
         song_data = song_detail_res.json().get('data', []).get('results', [])
 
-        download_urls = song_data[0].get('downloadUrl', [])
-        mp3_link = download_urls[-1].get('url')
-        if not mp3_link:
-            return print('mp3_link not found!')
+        first_result = song_data[0]
+        download_urls = first_result.get("downloadUrl", [])
+        mp3_link = next((x['url'] for x in download_urls if x.get('quality') == '320kbps'), None)
+
 
         return Response({
             'title': title,
