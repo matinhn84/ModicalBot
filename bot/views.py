@@ -34,13 +34,18 @@ def telegram_webhook(request):
                 performer = song_info['artist']
                 thumb = song_info['thumbnail']
             else:
-                print('**********************error')
+                print('****error')
         except Exception as e:
             print("AI error:", e)
-            response_text = "Something went wrong with AI model! 😔"
+            return JsonResponse({"mp3": mp3,
+                                 "title": title,
+                                 "performer":performer,
+                                 "thumb": thumb
+                                
+            })
 
     delete_telegram_message(chat_id, message_id)
-    # send_telegram_message(chat_id, response_text)
+    send_telegram_message(chat_id, response_text)
     send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
     return JsonResponse({"status": "ok"})
