@@ -36,13 +36,12 @@ def telegram_webhook(request):
             else:
                 print('****error')
         except Exception as e:
-            print("AI error:", e)
-            return JsonResponse({"mp3": mp3,
-                                 "title": title,
-                                 "performer":performer,
-                                 "thumb": thumb
-                                
-            })
+            print("AI error:", e,
+                  {"mp3": mp3,
+                  "title": title,
+                  "performer":performer,
+                  "thumb": thumb
+                  })
 
     delete_telegram_message(chat_id, message_id)
     send_telegram_message(chat_id, response_text)
