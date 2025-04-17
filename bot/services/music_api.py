@@ -6,7 +6,7 @@ from django.http import JsonResponse
 
 def get_song_info(query):
     try:
-        search_res = requests.get(f"https://saavn.dev/api/search?query={query}")
+        search_res = requests.get(f"https://saavn.dev/api/search?query=goodbye brother")
         if not search_res.ok:
             print("Search failed:", search_res.status_code)
             return None
@@ -20,7 +20,7 @@ def get_song_info(query):
 
         song = top_result[0]
         title = song.get('title')
-        artist = song.get('primaryArtists')
+        artist = song.get('primaryArtists', '')
         thumbnail = next((img.get("url") for img in song.get("image", []) if img.get("quality") == "150x150"), None)
 
         # Get MP3
