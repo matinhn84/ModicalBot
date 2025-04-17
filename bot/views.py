@@ -39,7 +39,7 @@ def telegram_webhook(request):
         #     raise ValueError("Song info fetch failed")
         # **
         try:
-            search_res = requests.get(f"https://saavn.dev/api/search?query=goodbye brother")
+            search_res = requests.get(f"https://saavn.dev/api/search?query={generated}")
             if not search_res.ok:
                 print("Search failed:", search_res.status_code)
                 return None
