@@ -45,7 +45,11 @@ def telegram_webhook(request):
         print("AI error:", repr(e))
         traceback.print_exc()
         send_telegram_message(chat_id, "Sorry! Can't find any music!")
-        return JsonResponse({'error': 'song_data'})
+        
+        return JsonResponse({
+            'error': type(e).__name__,
+            'message': str(e)
+        }, status=500)
     
     delete_telegram_message(chat_id, message_id)
 
