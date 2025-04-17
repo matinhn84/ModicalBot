@@ -6,19 +6,20 @@ from .telegram.utils import send_telegram_message, delete_telegram_message, send
 from .services.ai_model import query, build_prompt
 from .services.music_api import get_song_info
 
+import requests
+from glom import glom
+
 @csrf_exempt
 def telegram_webhook(request):
     if request.method != 'POST':
         return JsonResponse({"error": "invalid request"}, status=400)
 
     data = json.loads(request.body)
-    print(data)
 
     chat_id = data["message"]["chat"]["id"]
     text = data["message"]["text"]
 
     processing_msg  = send_telegram_message(chat_id, "Processing...")
-    send_telegram_audio(chat_id, 'http://aac.saavncdn.com/377/b7359c713bb8eb400a817e4267722b98_320.mp4', 'Asemoon ma nemiai?', 'dashaq', "")
     message_id = processing_msg["result"]["message_id"]
 
     if text == "/start":
@@ -32,7 +33,6 @@ def telegram_webhook(request):
             raise ValueError("Empty AI result!")
 
         song_info = get_song_info(generated)
- 
         if isinstance(song_info, dict):
             mp3 = song_info['mp3']
             title = song_info['title']
@@ -41,15 +41,15 @@ def telegram_webhook(request):
 
             send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
-        else:
-            raise ValueError("song_info is not valid dict")
-
     except Exception as e:
         import traceback
         print("AI error:", repr(e))
         traceback.print_exc()
-        send_telegram_message(chat_id, "Something went wrong!")
+        send_telegram_message(chat_id, "Sorry! Can't find any music!")
+        return JsonResponse({'error': e})
+    
 
 
 
-    return JsonResponse({"status": "ok"})
+    return JsonResponse({"status": 'ok'})
+
