@@ -31,6 +31,6 @@ def get_song_info(query):
             'mp3': mp3_link
         })
     except Exception as e:
-        return JsonResponse({'error': e})
+        print("AI error:", repr(e))
 
 
