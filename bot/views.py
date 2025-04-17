@@ -6,7 +6,7 @@ from .telegram.utils import send_telegram_message, delete_telegram_message, send
 from .services.ai_model import query, build_prompt
 from .services.music_api import get_song_info
 
-
+from django.http import HttpResponse
 
 @csrf_exempt
 def telegram_webhook(request):
