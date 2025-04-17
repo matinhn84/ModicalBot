@@ -20,7 +20,6 @@ def query(user_prompt):
     response.raise_for_status()
     return response.json()
 
-
 def build_prompt(user_input):
     return f"""
 "{user_input}"
