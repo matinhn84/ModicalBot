@@ -41,15 +41,8 @@ def telegram_webhook(request):
             send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
     except Exception as e:
-        import traceback
         print("AI error:", repr(e))
-        traceback.print_exc()
-        send_telegram_message(chat_id, "Sorry! Can't find any music!")
-        
-        return JsonResponse({
-            'error': type(e).__name__,
-            'message': str(e)
-        }, status=500)
+        return HttpResponse("Internal Server Error", status=500)
     
     delete_telegram_message(chat_id, message_id)
 
