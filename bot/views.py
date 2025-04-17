@@ -6,8 +6,7 @@ from .telegram.utils import send_telegram_message, delete_telegram_message, send
 from .services.ai_model import query, build_prompt
 from .services.music_api import get_song_info
 
-import requests
-from glom import glom
+
 
 @csrf_exempt
 def telegram_webhook(request):
@@ -48,7 +47,7 @@ def telegram_webhook(request):
         send_telegram_message(chat_id, "Sorry! Can't find any music!")
         return JsonResponse({'error': e})
     
-
+    delete_telegram_message(chat_id, message_id)
 
 
     return JsonResponse({"status": 'ok'})
