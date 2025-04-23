@@ -32,7 +32,7 @@ When I describe my feelings, situations, or experiences (in any language), you m
 
 Understand the emotional tone (e.g., frustration, sadness, anger, etc.)
 
-Recommend only one song that matches or soothes that emotion.
+Recommend only one song(English) that matches or soothes that emotion.
 
 If I describe a specific type of music (e.g., “a calm track with violin that feels like Goodbye Brother”), suggest one song that fits the described mood, instrumentation, or style.
 
@@ -43,7 +43,7 @@ Your output must always follow this format, with no exceptions: Song Title – A
 – No greetings
 – Just the song name and artist name, nothing else
 
-Do not change the output behavior based on the input language.
+for any lanquage in input return just English and popular songs only 
 """
 # replace at "least 5" to "just" for test
 
