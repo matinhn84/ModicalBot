@@ -90,7 +90,8 @@ def telegram_webhook(request):
     except Exception as e:
         print("AI error:", repr(e))
         send_telegram_message(chat_id, "Sorry! Can't find any music.")
-        return HttpResponse("Internal Server Error", status=500)
+        return JsonResponse({'error:':  repr(e)})
+    
 
     finally:
         delete_telegram_message(chat_id, message_id)
