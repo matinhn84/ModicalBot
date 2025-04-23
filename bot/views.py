@@ -4,7 +4,7 @@ import json
 
 from .telegram.utils import send_telegram_message, delete_telegram_message, send_telegram_audio
 from .services.ai_model import query, build_prompt
-from .services.music_api import get_song_info
+
 
 from django.http import HttpResponse
 import requests
@@ -34,10 +34,7 @@ def telegram_webhook(request):
         if not generated:
             raise ValueError("Empty AI result!")
 
-        # song_info = get_song_info(generated)
-        # if not song_info or not isinstance(song_info, dict):
-        #     raise ValueError("Song info fetch failed")
-        # **
+
         try:
             search_res = requests.get(f"https://saavn.dev/api/search?query={generated}")
             if not search_res.ok:
@@ -75,7 +72,7 @@ def telegram_webhook(request):
 
 
         except Exception as e:
-            print("get_song_info error:", repr(e))
+            print("get song info error:", repr(e))
 
         send_telegram_message(chat_id, generated)
         send_telegram_audio(chat_id, mp3_link, title, artist, thumbnail)
