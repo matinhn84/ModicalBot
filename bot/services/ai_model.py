@@ -16,7 +16,8 @@ def query(user_prompt):
             {"role": "user", "content": user_prompt}
         ],
         "max_tokens": 1000
-    }
+}
+
     response = requests.post(API_URL, headers=headers, json=payload)
     response.raise_for_status()
     return response.json()
