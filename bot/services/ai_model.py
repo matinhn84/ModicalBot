@@ -11,10 +11,11 @@ headers = {
 
 def query(user_prompt):
     payload = {
-        "model": "google/gemini-pro",
+        "model": "openai/gpt-4o",
         "messages": [
             {"role": "user", "content": user_prompt}
-        ]
+        ],
+        "max_tokens": 1000
     }
     response = requests.post(API_URL, headers=headers, json=payload)
     response.raise_for_status()
