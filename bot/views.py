@@ -77,6 +77,7 @@ def telegram_webhook(request):
         except Exception as e:
             print("get_song_info error:", repr(e))
 
+        send_telegram_message(chat_id, generated)
         send_telegram_audio(chat_id, mp3_link, title, artist, thumbnail)
         # **
 
