@@ -30,7 +30,7 @@ def telegram_webhook(request):
         prompt = build_prompt(text)
         ai_response = query(prompt)
         generated = ai_response.get("choices", [{}])[0].get("message", {}).get("content", "")
-
+        generated = str(generated)
         if not generated:
             raise ValueError("Empty AI result!")
 
