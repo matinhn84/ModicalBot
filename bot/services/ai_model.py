@@ -10,15 +10,14 @@ headers = {
 
 def query(user_prompt):
     payload = {
-        "model": "qwen/qwen3-0.6b-04-28:free",
+        "model": "qwen/qwen3-4b:free",
         "messages": [
         {
             "role": "user",
             "content": user_prompt
         }
-        ],    
+        ],
     }
-
     response = requests.post(API_URL, headers=headers, json=payload)
     response.raise_for_status()
     return response.json()
