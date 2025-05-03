@@ -41,11 +41,11 @@ def telegram_webhook(request):
         ]
 
         send_telegram_inline_keyboard(
-            chat_id=123456789,
+            chat_id=chat_id,
             text="Tralalero tralala",
             buttons=buttons,
             parse_mode="HTML"
-)
+        )
 
 
     except Exception as e:
