@@ -30,3 +30,22 @@ def send_telegram_audio(chat_id, mp3_link, title, artist, thumb_url):
         'thumb': thumb_url or ""
     }
     requests.post(url, json=payload)
+
+
+
+
+def send_telegram_inline_keyboard(chat_id, text, buttons, parse_mode=None):
+
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": text,
+        "reply_markup": {
+            "inline_keyboard": buttons
+        }
+    }
+    if parse_mode:
+        payload["parse_mode"] = parse_mode
+
+    response = requests.post(url, json=payload)
+    return response.json()  

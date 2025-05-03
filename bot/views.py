@@ -2,12 +2,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from .telegram.utils import send_telegram_message, delete_telegram_message, send_telegram_audio
+from .telegram.utils import send_telegram_message, delete_telegram_message, send_telegram_inline_keyboard
 from .services.ai_model import query, build_prompt
 
 
-from django.http import HttpResponse
-import requests
 
 @csrf_exempt
 def telegram_webhook(request):
@@ -34,58 +32,21 @@ def telegram_webhook(request):
             raise ValueError("Empty AI result!")
 
 
-        try:
-            search_res = requests.get(f"https://saavn.dev/api/search?query={generated}")
-            if not search_res.ok:
-                print("Search failed:", search_res.status_code)
-                return None
-
-            data = search_res.json()
-            top_result = data.get('data', {}).get('songs', {}).get('results')
-
-            if not top_result:
-                print("No topQuery results found")
-                return None
-
-            song = top_result[0]
-            title = song.get('title')
-            artist = song.get('primaryArtists', '')
-            thumbnail = next((img.get("url") for img in song.get("image", []) if img.get("quality") == "150x150"), None)
-
-            # Get MP3
-            song_detail_res = requests.get(f"https://saavn.dev/api/search/songs?query={title}")
-            if not song_detail_res.ok:
-                print("Details fetch failed")
-                return None
-
-            song_data = song_detail_res.json()
-            results = song_data.get('data', {}).get('results', [])
-
-            # if not results:
-            #     print("No detailed results")
-            #     return None
-
-            download_urls = results[0].get('downloadUrl', [])
-            mp3_link = next((x['url'] for x in download_urls if x.get('quality') == '320kbps'), None)
-
-
-
-        except Exception as e:
-            print("get song info error:", repr(e))
-
+        
         send_telegram_message(chat_id, generated)
-        send_telegram_audio(chat_id, mp3_link, title, artist, thumbnail)
-        # **
+            
+        buttons = [
+            [{"text": "Is strong", "url": "https://tralalero-tralala.com"}],
+            [{"text": "Is Weak" , "callback_data": "test_action"}]
+        ]
 
-        # mp3 = song_info.get('mp3')
-        # title = song_info.get('title')
-        # performer = song_info.get('artist')
-        # thumb = song_info.get('thumbnail')
+        send_telegram_inline_keyboard(
+            chat_id=123456789,
+            text="Tralalero tralala",
+            buttons=buttons,
+            parse_mode="HTML"
+)
 
-        # if not all([mp3, title]):
-        #     raise ValueError("Incomplete song data")
-
-        # send_telegram_audio(chat_id, mp3, title, performer, thumb)
 
     except Exception as e:
         print("AI error:", repr(e))
@@ -96,4 +57,4 @@ def telegram_webhook(request):
     finally:
         delete_telegram_message(chat_id, message_id)
 
-    return JsonResponse({"status": mp3_link})
+    return JsonResponse({"status": 'ok'})
