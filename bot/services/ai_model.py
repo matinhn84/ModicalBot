@@ -5,18 +5,19 @@ API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 headers = {
     "Authorization": f"Bearer {HF_TOKEN}",
-    "Content-Type": "application/json",
-    "HTTP-Referer": "https://yourproject.com"
+    "Content-Type": "application/json"
 }
 
 def query(user_prompt):
     payload = {
-        "model": "openai/gpt-4o",
+        "model": "qwen/qwen3-0.6b-04-28:free",
         "messages": [
-            {"role": "user", "content": user_prompt}
-        ],
-        "max_tokens": 1000
-}
+        {
+            "role": "user",
+            "content": user_prompt
+        }
+        ],    
+    }
 
     response = requests.post(API_URL, headers=headers, json=payload)
     response.raise_for_status()
