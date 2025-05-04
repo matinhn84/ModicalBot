@@ -34,14 +34,23 @@ def telegram_webhook(request):
 
         
         send_telegram_message(chat_id, generated)
+        buttons = [
+            [
+                {"text": "Google", "url": "https://google.com"},
+                {"text": "Telegram", "url": "https://t.me"}
+            ],
+            [
+                {"text": "اطلاعات بیشتر", "callback_data": "more_info"}
+            ]
+        ]
             
         send_photo_with_button(
         chat_id=chat_id,
         image_url="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/20/75/39/207539da-60d1-8ac1-7f4f-9f7e534c8c85/00030206709728.rgb.jpg/400x400cc.jpg",
         caption="<b>Moments (Super Slowed + Reverb)</b> — <i>danjerr</i>\n<a href='https://t.me/yourchannel'>Music Finder | موزیک یاب</a>",
         button_text="Google",
-        button_url="https://google.com"
-)
+        buttons= buttons
+        )
 
 
     except Exception as e:
