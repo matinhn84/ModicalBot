@@ -1,13 +1,12 @@
 import requests
 from django.http import JsonResponse
 
-def get_music_metadata(request):
+def get_music_metadata(song_name):
 
-    term = request.GET.get('term')
 
     url = "https://shazam.p.rapidapi.com/search"
 
-    querystring = {"term":term,
+    querystring = {"term":song_name,
                    "locale":"en-US",
                    "offset":"0",
                    "limit":"5"
