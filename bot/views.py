@@ -4,6 +4,7 @@ import json
 
 from .telegram.utils import send_telegram_message, delete_telegram_message, send_photo_with_button
 from .services.ai_model import query, build_prompt
+from .services.shazam_api import get_music_metadata
 
 
 
@@ -34,20 +35,24 @@ def telegram_webhook(request):
 
         
         send_telegram_message(chat_id, generated)
-        buttons = [
-            [
-                {"text": "Google", "url": "https://google.com"},
-                {"text": "Telegram", "url": "https://t.me"}
-            ],
-            [
-                {"text": "اطلاعات بیشتر", "callback_data": "more_info"}
-            ]
-        ]
+
+        song_meta_data = get_music_metadata(generated)
+
+        buttons = []
+        row = []
+        for name, url in song_meta_data.items():
+            if url:
+                row.append({"text": name.capitalize(), "url": url})
+                if len(row)==2:
+                    buttons.append(row)
+                    row = []
+        if row:
+            buttons.append(row)
             
         send_photo_with_button(
         chat_id=chat_id,
-        image_url="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/20/75/39/207539da-60d1-8ac1-7f4f-9f7e534c8c85/00030206709728.rgb.jpg/400x400cc.jpg",
-        caption="<b>Moments (Super Slowed + Reverb)</b> — <i>danjerr</i>\n<a href='https://t.me/yourchannel'>Music Finder | موزیک یاب</a>",
+        image_url=song_meta_data.get("coverart", ""),
+        caption=f"<b>{song_meta_data.get('title', '')}</b> — <i>{song_meta_data.get('artist', '')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical  | مودیکال </a>",
         buttons= buttons
         )
 
