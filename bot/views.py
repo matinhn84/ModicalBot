@@ -39,16 +39,20 @@ def telegram_webhook(request):
 
         song_meta_data = get_music_metadata(generated)
 
-        buttons = []
+        buttons = [
+            [{"text": "Spotify", "url": "https://spotify.com/song123"}],
+            [{"text": "Youtube", "url": "https://youtube.com/watch?v=abc123"}]
+        ]
         row = []
-        for name, url in song_meta_data.items():
-            if url:
-                row.append({"text": name.capitalize(), "url": url})
-                if len(row)==2:
-                    buttons.append(row)
-                    row = []
-        if row:
-            buttons.append(row)
+        print(song_meta_data.items())
+        # for name, url in song_meta_data.items():
+        #     if url:
+        #         row.append({"text": name.capitalize(), "url": url})
+        #         if len(row)==2:
+        #             buttons.append(row)
+        #             row = []
+        # if row:
+        #     buttons.append(row)
             
         send_photo_with_button(
         chat_id=chat_id,
