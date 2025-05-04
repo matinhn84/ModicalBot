@@ -56,7 +56,7 @@ def get_music_metadata(song_name):
             if option.get("caption") == "OPEN":
                 result["apple_music"] = option["actions"][0].get("uri")
 
-        return JsonResponse(result)
+        return result
 
     except Exception as e:
-        return JsonResponse({'error': 'error parsing API response', 'details': str(e)})
+        return {'error': 'error parsing API response', 'details': str(e)}
