@@ -33,19 +33,19 @@ def send_telegram_audio(chat_id, mp3_link, title, artist, thumb_url):
 
 
 
+def send_photo_with_button(chat_id, image_url, caption, button_text, button_url):
+    url = f"https://api.telegram.org/bot{TOKEN}/sendPhoto"
 
-def send_telegram_inline_keyboard(chat_id, text, buttons, parse_mode=None):
-
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
     payload = {
         "chat_id": chat_id,
-        "text": text,
+        "photo": image_url,
+        "caption": caption,
+        "parse_mode": "HTML",
         "reply_markup": {
-            "inline_keyboard": buttons
+            "inline_keyboard": [[
+                {"text": button_text, "url": button_url}
+            ]]
         }
     }
-    if parse_mode:
-        payload["parse_mode"] = parse_mode
 
-    response = requests.post(url, json=payload)
-    return response.json()  
+    return requests.post(url, json=payload)
