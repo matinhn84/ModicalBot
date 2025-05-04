@@ -20,8 +20,13 @@ def get_music_metadata(song_name):
     response = requests.get(url, headers=headers, params=querystring)
     try:
         data = response.json()
-
-        first_track = data["tracks"]["hits"][0]["track"]
+        if not data.get("tracks") or not data["tracks"].get("hits"):
+            return {
+                "error": "No tracks found for the query.",
+                "details": f"No results for: {song_name}"
+            }
+        else:
+            first_track = data["tracks"]["hits"][0]["track"]
 
         result = {
             "title": first_track.get("title"),
