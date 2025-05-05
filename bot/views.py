@@ -18,6 +18,7 @@ def telegram_webhook(request):
         chat_id = data["message"]["chat"]["id"]
         text = data["message"]["text"]
 
+        message_id = None
         processing_msg = send_telegram_message(chat_id, "Processing...")
         message_id = processing_msg["result"]["message_id"]
 
@@ -122,15 +123,17 @@ def telegram_webhook(request):
         # )
         buttons = []
         row = []
-        
-        for name, url in result.items():
+        button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
+        for key in button_keys:
+            url = result.get(key)
             if url:
-                row.append({"text": name.capitalize(), "url": url})
-                if len(row)==2:
+                row.append({"text": key.replace("_", " ").title(), "url": url})
+                if len(row) == 2:
                     buttons.append(row)
                     row = []
         if row:
             buttons.append(row)
+
             
         send_photo_with_button(
         chat_id=chat_id,
@@ -147,6 +150,7 @@ def telegram_webhook(request):
     
 
     finally:
-        delete_telegram_message(chat_id, message_id)
+        if message_id:
+            delete_telegram_message(chat_id, message_id)
 
     return JsonResponse({"status": 'ok'})
