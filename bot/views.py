@@ -40,6 +40,7 @@ def telegram_webhook(request):
         send_telegram_message(chat_id, generated)
 
         music_data = get_music_metadata(pure_song_name)
+        print(music_data)
 
         buttons = []
         row = []
