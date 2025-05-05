@@ -97,7 +97,10 @@ def telegram_webhook(request):
                     result["apple_music"] = option["actions"][0].get("uri")
             
         except Exception as e:
-            return {'error': 'error parsing API response', 'details': str(e)}
+            result = {'error': 'error parsing API response', 'details': str(e)}
+            if 'error' in result:
+                send_telegram_message(chat_id, "Eror in geting song data")
+                return JsonResponse(result)
 
         # buttons = []
         # row = []
