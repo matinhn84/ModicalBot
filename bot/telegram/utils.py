@@ -9,7 +9,12 @@ def send_telegram_message(chat_id, text):
         "text": text
     }
     response = requests.post(url, json=payload)
+    if not response.ok:
+        print("Telegram API error:", response.status_code, response.text)
+        return None
+
     return response.json()
+
 
 def delete_telegram_message(chat_id, message_id):
     url = f"https://api.telegram.org/bot{TOKEN}/deleteMessage"

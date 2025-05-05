@@ -18,7 +18,9 @@ def telegram_webhook(request):
         chat_id = data["message"]["chat"]["id"]
         text = data["message"]["text"]
 
-        message_id = None
+        if not processing_msg or "result" not in processing_msg:
+            send_telegram_message(chat_id, "Error sending message.")
+            return JsonResponse({"error": "telegram sendMessage failed"})
         processing_msg = send_telegram_message(chat_id, "Processing...")
         message_id = processing_msg["result"]["message_id"]
 
@@ -30,6 +32,8 @@ def telegram_webhook(request):
         prompt = build_prompt(text)
         ai_response = query(prompt)
         generated = ai_response.get("choices", [{}])[0].get("message", {}).get("content", "")
+        pure_song_name = str(generated).splitlines()[0]
+
         
         if not generated:
             raise ValueError("Empty AI result!")
@@ -38,94 +42,13 @@ def telegram_webhook(request):
         
         send_telegram_message(chat_id, generated)
 
-        # song_meta_data = get_music_metadata(generated) # comment using func
-        import requests
-        url = "https://shazam.p.rapidapi.com/search"
+        music_data = get_music_metadata(pure_song_name)
 
-        querystring = {"term":generated,
-                    "locale":"en-US",
-                    "offset":"0",
-                    "limit":"5"
-        }
-
-        headers = {
-            "x-rapidapi-key": "7710fb387dmshac7444e0db327b5p145deejsn0bc57da0badb",
-            "x-rapidapi-host": "shazam.p.rapidapi.com"
-        }
-
-        response = requests.get(url, headers=headers, params=querystring)
-        try:
-            data = response.json()
-            if not data.get("tracks") or not data["tracks"].get("hits"):
-                return {
-                    "error": "No tracks found for the query.",
-                    "details": f"No results for: {generated}"
-                }
-            else:
-                first_track = data["tracks"]["hits"][0]["track"]
-
-            result = {
-                "title": first_track.get("title"),
-                "artist": first_track.get("subtitle"),
-                "coverart": first_track["images"].get("coverarthq"),
-                "mp3": None,
-                "apple_music": None,
-                "spotify": None,
-                "youtube_music": None,
-                "soundcloud": None
-            }
-
-    
-            for action in first_track.get("hub", {}).get("actions", []):
-                if action.get("type") == "uri" and "itunes.apple.com" in action.get("uri"):
-                    result["mp3"] = action["uri"]
-
-
-            for provider in first_track.get("hub", {}).get("providers", []):
-                caption = provider.get("caption", "").lower()
-                uri = provider.get("actions", [{}])[0].get("uri")
-
-                if "spotify" in caption:
-                    result["spotify"] = uri
-                elif "deezer" in caption:
-                    result["youtube_music"] = uri
-                elif "soundcloud" in caption:
-                    result["soundcloud"] = uri
-
-
-            for option in first_track.get("hub", {}).get("options", []):
-                if option.get("caption") == "OPEN":
-                    result["apple_music"] = option["actions"][0].get("uri")
-            
-        except Exception as e:
-            result = {'error': 'error parsing API response', 'details': str(e)}
-            if 'error' in result:
-                send_telegram_message(chat_id, "Eror in geting song data")
-                return JsonResponse(result)
-
-        # buttons = []
-        # row = []
-        # print(song_meta_data.items())
-        # for name, url in song_meta_data.items():
-        #     if url:
-        #         row.append({"text": name.capitalize(), "url": url})
-        #         if len(row)==2:
-        #             buttons.append(row)
-        #             row = []
-        # if row:
-        #     buttons.append(row)
-            
-        # send_photo_with_button(
-        # chat_id=chat_id,
-        # image_url=song_meta_data.get("coverart", ""),
-        # caption=f"<b>{song_meta_data.get('title', '')}</b> — <i>{song_meta_data.get('artist', '')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical  | مودیکال </a>",
-        # buttons= buttons
-        # )
         buttons = []
         row = []
         button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         for key in button_keys:
-            url = result.get(key)
+            url = music_data.get(key)
             if url:
                 row.append({"text": key.replace("_", " ").title(), "url": url})
                 if len(row) == 2:
@@ -137,8 +60,8 @@ def telegram_webhook(request):
             
         send_photo_with_button(
         chat_id=chat_id,
-        image_url=result.get("coverart", ""),
-        caption=f"<b>{result.get('title', '')}</b> — <i>{result.get('artist', '')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical  | مودیکال </a>",
+        image_url=music_data.get("coverart", ""),
+        caption=f"<b>{music_data.get('title', '')}</b> — <i>{music_data.get('artist', '')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical  | مودیکال </a>",
         buttons= buttons
         )
 

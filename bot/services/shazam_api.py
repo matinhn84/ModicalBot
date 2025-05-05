@@ -1,6 +1,6 @@
 import requests
-
-
+from .ai_model import build_prompt, query
+from django.http import JsonResponse
 def get_music_metadata(song_name):
 
 
@@ -60,6 +60,10 @@ def get_music_metadata(song_name):
         for option in first_track.get("hub", {}).get("options", []):
             if option.get("caption") == "OPEN":
                 result["apple_music"] = option["actions"][0].get("uri")
+
+
+
+        
 
         return result
 
