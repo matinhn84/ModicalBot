@@ -18,9 +18,6 @@ def telegram_webhook(request):
         chat_id = data["message"]["chat"]["id"]
         text = data["message"]["text"]
 
-        if not processing_msg or "result" not in processing_msg:
-            send_telegram_message(chat_id, "Error sending message.")
-            return JsonResponse({"error": "telegram sendMessage failed"})
         processing_msg = send_telegram_message(chat_id, "Processing...")
         message_id = processing_msg["result"]["message_id"]
 
