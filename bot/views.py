@@ -38,9 +38,10 @@ def telegram_webhook(request):
         send_telegram_message(chat_id, generated)
 
         # song_meta_data = get_music_metadata(generated) # comment using func
+        import requests
         url = "https://shazam.p.rapidapi.com/search"
 
-        querystring = {"term":song_name,
+        querystring = {"term":generated,
                     "locale":"en-US",
                     "offset":"0",
                     "limit":"5"
@@ -57,7 +58,7 @@ def telegram_webhook(request):
             if not data.get("tracks") or not data["tracks"].get("hits"):
                 return {
                     "error": "No tracks found for the query.",
-                    "details": f"No results for: {song_name}"
+                    "details": f"No results for: {generated}"
                 }
             else:
                 first_track = data["tracks"]["hits"][0]["track"]
