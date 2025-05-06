@@ -41,21 +41,27 @@ def telegram_webhook(request):
 
         music_data = get_music_metadata(pure_song_name)
 
+
+
         buttons = []
         row = []
+        button =[]
         button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         for key in button_keys:
             url = music_data.get(key)
             if url:
-                buttons.append({"text":key.replace("_", " ").title(), "url": url})
+
+                button.append({"text":key.replace("_", " ").title(), "url": url})
+                buttons.append(button)
+                button = []
                 # if len(row) == 2:
                 #     buttons.append(row)
                 #     row = []
         # if row:
         #     buttons.append(row)
-        print(buttons)
 
- 
+
+
         send_photo_with_button(
         chat_id=chat_id,
         image_url=music_data.get("coverart"),
@@ -63,6 +69,11 @@ def telegram_webhook(request):
         buttons= buttons
         )
 
+        print(chat_id, end="\n\n")
+        print(music_data.get("coverart")), end="\n\n"
+        print(music_data.get('title'), end="\n\n")
+        print(music_data.get('artist'), end="\n\n")
+        print(buttons, end="\n\n")
 
     except Exception as e:
         print("AI error:", repr(e))
