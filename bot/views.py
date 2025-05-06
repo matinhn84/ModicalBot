@@ -6,6 +6,7 @@ from .telegram.utils import send_telegram_message, delete_telegram_message, send
 from .services.ai_model import query, build_prompt
 from .services.shazam_api import get_music_metadata
 
+import requests
 
 
 @csrf_exempt
@@ -53,7 +54,7 @@ def telegram_webhook(request):
             "x-rapidapi-host": "shazam.p.rapidapi.com"
         }
 
-        response = request.get(url, headers=headers, params=querystring)
+        response = requests.get(url, headers=headers, params=querystring)
         try:
             data = response.json()
             if not data.get("tracks") or not data["tracks"].get("hits"):
