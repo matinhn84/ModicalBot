@@ -1,4 +1,5 @@
 import requests
+import json
 
 TOKEN = '7687944134:AAExhPl0bOBKI2ID_qsi4fzEDVDhOW5urLw'
 
@@ -46,9 +47,7 @@ def send_photo_with_button(chat_id, image_url, caption, buttons):
         "photo": image_url,
         "caption": caption,
         "parse_mode": "HTML",
-        "reply_markup": {
-            "inline_keyboard": buttons
-        }
+        "reply_markup": json.dumps({"inline_keyboard": buttons})
     }
 
     return requests.post(url, json=payload)
