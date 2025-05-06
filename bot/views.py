@@ -69,11 +69,11 @@ def telegram_webhook(request):
         buttons= buttons
         )
 
-        print(chat_id, end="\n\n")
-        print(music_data.get("coverart"), end="\n\n")
-        print(music_data.get('title'), end="\n\n")
-        print(music_data.get('artist'), end="\n\n")
-        print(buttons, end="\n\n")
+        print(chat_id)
+        print(music_data.get("coverart"))
+        print(music_data.get('title'))
+        print(music_data.get('artist'))
+        print(buttons)
 
     except Exception as e:
         print("AI error:", repr(e))
