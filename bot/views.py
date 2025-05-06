@@ -51,7 +51,7 @@ def telegram_webhook(request):
             url = music_data.get(key)
             if url:
 
-                button.append({"text":key.replace("_", " ").title(), "url": url})
+                button.append({"text":key, "url": url})
                 buttons.append(button)
                 button = []
                 # if len(row) == 2:
@@ -70,9 +70,9 @@ def telegram_webhook(request):
         )
 
         print(chat_id)
-        print(music_data.get("coverart"))
-        print(music_data.get('title'))
-        print(music_data.get('artist'))
+        print(music_data["coverart"])
+        print(music_data['title'])
+        print(music_data['artist'])
         print(buttons)
 
     except Exception as e:
