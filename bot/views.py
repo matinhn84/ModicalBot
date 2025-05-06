@@ -126,7 +126,7 @@ def telegram_webhook(request):
         send_photo_with_button(chat_id,
                                 image_url,
                                 text,
-                                [[{'text': 'mp3', 'url': 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/35/d3/75/35d3756f-e346-3d3b-a4b6-032e498120b4/mzaf_11074143014435706686.plus.aac.ep.m4a'}], [{'text': 'apple_music', 'url': 'https://music.apple.com/us/album/everybody-hurts/1440949853?i=1440949865&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_ios'}]]
+                                [[{'text': 'mp3', 'url': 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/35/d3/75/35d3756f-e346-3d3b-a4b6-032e498120b4/mzaf_11074143014435706686.plus.aac.ep.m4a'}, {'text': 'apple_music', 'url': 'https://music.apple.com/us/album/everybody-hurts/1440949853?i=1440949865&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_ios'}]]
                                )
 
         print(chat_id)
