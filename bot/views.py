@@ -47,6 +47,7 @@ def telegram_webhook(request):
         button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         for key in button_keys:
             url = music_data.get(key)
+            print(music_data.get(key))
             if url:
                 buttons.append({"text": key.replace("_", " ").title(), "url": url})
                 # if len(row) == 2:
@@ -54,8 +55,10 @@ def telegram_webhook(request):
                 #     row = []
         # if row:
         #     buttons.append(row)
+        print(buttons)
 
-            
+        print('***',music_data.get("coverart", ""))  
+        print('****', music_data.get('title', '')) 
         send_photo_with_button(
         chat_id=chat_id,
         image_url=music_data.get("coverart", ""),
