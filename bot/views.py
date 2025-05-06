@@ -123,7 +123,9 @@ def telegram_webhook(request):
         image_url=result.get("coverart")
         text = f"<b>{result.get('title')}</b> — <i>{result.get('artist')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical</a>"
 
-        send_photo_with_button(chat_id,"https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/04/85/97/0485973d-6920-b651-f20d-5393755a6665/mzi.uexbwasy.jpg/400x400cc.jpg","text",
+        send_photo_with_button(chat_id,
+                                image_url,
+                                text,
                                 [[ {'text': 'mp3', 'url': 'https://hi.com'} ]]
                                )
 
