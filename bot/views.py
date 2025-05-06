@@ -128,6 +128,7 @@ def telegram_webhook(request):
 
                                "text",
                                [{'text': 'mp3', 'url': 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/33/da/48/33da4827-633f-3463-cd69-1553fab8a418/mzaf_12367389901148165106.plus.aac.ep.m4a'}] #tested
+                               )
 
         print(chat_id)
         print(result["coverart"])
