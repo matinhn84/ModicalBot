@@ -48,8 +48,7 @@ def telegram_webhook(request):
         for key in button_keys:
             url = music_data.get(key)
             if url:
-                button.append({"text": key, "url": url})
-                row.append(button)
+                row.append({"text": key, "url": url})
                 if len(row) == 2:
                     buttons.append(row)
                     row = []
