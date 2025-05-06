@@ -53,7 +53,7 @@ def telegram_webhook(request):
             "x-rapidapi-host": "shazam.p.rapidapi.com"
         }
 
-        response = pure_song_name.get(url, headers=headers, params=querystring)
+        response = request.get(url, headers=headers, params=querystring)
         try:
             data = response.json()
             if not data.get("tracks") or not data["tracks"].get("hits"):
@@ -98,7 +98,7 @@ def telegram_webhook(request):
                     result["apple_music"] = option["actions"][0].get("uri")
 
         except Exception as e:
-            return {'error': 'error parsing API response', 'details': str(e)}
+            return JsonResponse({'error': 'error parsing API response', 'details': str(e)})
 
 
         buttons = []
