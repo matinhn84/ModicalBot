@@ -126,9 +126,9 @@ def telegram_webhook(request):
         send_photo_with_button(chat_id,
                                 image_url,
                                 text,
-                                [{"text": "mp3", "url": result["mp3"]}, {"text": "Apple Music", "url": result["apple_music"]}],
+                                [[{"text": "mp3", "url": result["mp3"]}, {"text": "Apple Music", "url": result["apple_music"]}],
                                   [{"text": "Spotify", "url": result["spotify"]}, {"text": "YouTube Music", "url": result["youtube_music"]}],
-                                    [{"text": "SoundCloud", "url": result["soundcloud"]}]
+                                    [{"text": "SoundCloud", "url": result["soundcloud"]}]]
                                )
 
 
