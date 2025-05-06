@@ -69,3 +69,5 @@ def get_music_metadata(song_name):
 
     except Exception as e:
         return {'error': 'error parsing API response', 'details': str(e)}
+    
+
