@@ -124,9 +124,10 @@ def telegram_webhook(request):
         text = f"<b>{result.get('title')}</b> — <i>{result.get('artist')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical</a>"
 
         send_photo_with_button(chat_id,
-                               "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/04/85/97/0485973d-6920-b651-f20d-5393755a6665/mzi.uexbwasy.jpg/400x400cc.jpg",
+                               "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/04/85/97/0485973d-6920-b651-f20d-5393755a6665/mzi.uexbwasy.jpg/400x400cc.jpg", # tested
+
                                text,
-                               buttons)
+                               [[{'text': 'mp3', 'url': 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/33/da/48/33da4827-633f-3463-cd69-1553fab8a418/mzaf_12367389901148165106.plus.aac.ep.m4a'}], [{'text': 'apple_music', 'url': 'https://music.apple.com/us/album/all-i-want/610186727?i=610187010&mttnagencyid=s2n&mttnsiteid=125115&mttn3pid=Apple-Shazam&mttnsub1=Shazam_ios&mttnsub2=5348615A-616D-3235-3830-44754D6D5973&itscg=30201&app=music&itsct=Shazam_ios'}], [{'text': 'spotify', 'url': 'spotify:search:All%20I%20Want%20Kodaline'}], [{'text': 'youtube_music', 'url': 'deezer-query://www.deezer.com/play?query=%7Btrack%3A%27All+I+Want%27%20artist%3A%27Kodaline%27%7D'}]])
 
         print(chat_id)
         print(result["coverart"])
