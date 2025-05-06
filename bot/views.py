@@ -42,12 +42,14 @@ def telegram_webhook(request):
         music_data = get_music_metadata(pure_song_name)
 
         buttons = []
+        button = []
         row = []
         button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         for key in button_keys:
             url = music_data.get(key)
             if url:
-                row.append({"text": key, "url": url})
+                button.append({"text": key, "url": url})
+                row.append(button)
                 if len(row) == 2:
                     buttons.append(row)
                     row = []
@@ -76,3 +78,5 @@ def telegram_webhook(request):
         print('done'.join('*'))
 
     return JsonResponse({"status": 'ok'})
+
+
