@@ -104,12 +104,15 @@ def telegram_webhook(request):
 
         buttons = []
         row = []
+        button = []
         button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         for key in button_keys:
             url = result.get(key)
             if url:
-
-                row.append({"text":key, "url": url})
+                
+                button.append({"text":key, "url": url})
+                row.append(button)
+                button =[]
                 if len(row) == 2:
                     buttons.append(row)
                     row = []
