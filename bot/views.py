@@ -111,13 +111,13 @@ def telegram_webhook(request):
             if url:
                 
                 button.append({"text":key, "url": url})
-                row.append(button)
+                buttons.append(button)
                 button =[]
-                if len(row) == 2:
-                    buttons.append(row)
-                    row = []
-        if row:
-            buttons.append(row)
+                # if len(row) == 2:
+                #     buttons.append(row)
+                #     row = []
+        # if row:
+        #     buttons.append(row)
 
 
         image_url=result.get("coverart")
