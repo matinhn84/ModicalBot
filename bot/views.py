@@ -70,7 +70,7 @@ def telegram_webhook(request):
         )
 
         print(chat_id, end="\n\n")
-        print(music_data.get("coverart")), end="\n\n"
+        print(music_data.get("coverart"), end="\n\n")
         print(music_data.get('title'), end="\n\n")
         print(music_data.get('artist'), end="\n\n")
         print(buttons, end="\n\n")
