@@ -53,12 +53,13 @@ def telegram_webhook(request):
                     row = []
         if row:
             buttons.append(row)
+        print(buttons)
 
  
         send_photo_with_button(
         chat_id=chat_id,
-        image_url=music_data.get("coverart", ""),
-        caption=f"<b>{music_data.get('title', '')}</b> — <i>{music_data.get('artist', '')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical  | مودیکال </a>",
+        image_url=music_data.get("coverart"),
+        caption=f"<b>{music_data.get('title')}</b> — <i>{music_data.get('artist')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical  | مودیکال </a>",
         buttons= buttons
         )
 
@@ -72,5 +73,6 @@ def telegram_webhook(request):
     finally:
         if message_id:
             delete_telegram_message(chat_id, message_id)
+        print('done'.join('**'))
 
     return JsonResponse({"status": 'ok'})
