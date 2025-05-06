@@ -131,11 +131,6 @@ def telegram_webhook(request):
                                     [{"text": "SoundCloud", "url": result["soundcloud"]}]
                                )
 
-        print(chat_id)
-        print(result["coverart"])
-        print(result['title'])
-        print(result['artist'])
-        print(buttons)
 
     except Exception as e:
         print("error:", repr(e))
@@ -151,3 +146,4 @@ def telegram_webhook(request):
     return JsonResponse({"status": 'ok'})
 
 
+# ttt
