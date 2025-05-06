@@ -117,13 +117,10 @@ def telegram_webhook(request):
             buttons.append(row)
 
 
+        image_url=result.get("coverart")
+        text = f"<b>{result.get('title')}</b> — <i>{result.get('artist')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical  | مودیکال </a>"
 
-        send_photo_with_button(
-        chat_id=chat_id,
-        image_url=result.get("coverart"),
-        caption=f"<b>{result.get('title')}</b> — <i>{result.get('artist')}</i>\n<a href='https://t.me/MoodicalBot'>Moodical  | مودیکال </a>",
-        buttons= buttons
-        )
+        send_photo_with_button(chat_id,image_url,text,buttons)
 
         print(chat_id)
         print(result["coverart"])
