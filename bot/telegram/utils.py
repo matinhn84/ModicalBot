@@ -50,4 +50,4 @@ def send_photo_with_button(chat_id, image_url, caption, buttons):
         "reply_markup": json.dumps({"inline_keyboard": buttons})
     }
 
-    return requests.post(url, json=payload)
+    return requests.post(url, data=payload)

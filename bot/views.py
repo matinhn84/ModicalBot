@@ -42,7 +42,6 @@ def telegram_webhook(request):
         music_data = get_music_metadata(pure_song_name)
 
         buttons = []
-        button = []
         row = []
         button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         for key in button_keys:
@@ -74,7 +73,7 @@ def telegram_webhook(request):
     finally:
         if message_id:
             delete_telegram_message(chat_id, message_id)
-        print('done'.join('*'))
+        print('done'.join('**'))
 
     return JsonResponse({"status": 'ok'})
 
