@@ -140,7 +140,7 @@ def telegram_webhook(request):
     finally:
         if message_id:
             delete_telegram_message(chat_id, message_id)
-        print('done'.join('**'))
+        print('done!'.join('**'))
 
     return JsonResponse({"status": 'ok'})
 
