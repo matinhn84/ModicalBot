@@ -101,15 +101,15 @@ def telegram_webhook(request):
         except Exception as e:
             return JsonResponse({'error': 'error parsing API response', 'details': str(e)})
 
-        buttons = []
+        button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         valid_buttons = []
-        for row in buttons:
+        for row in button_keys:
             valid_row = []
             for btn in row:
                 url = btn.get("url", "")
                 if url.startswith("http://") or url.startswith("https://"):
                     valid_row.append(btn)
-            if valid_row:
+            if len(valid_row)==2:
                 valid_buttons.append(valid_row)
 
 
