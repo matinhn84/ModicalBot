@@ -104,20 +104,17 @@ def telegram_webhook(request):
 
         buttons = []
         row = []
-        button = []
         button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         for key in button_keys:
             url = result.get(key)
-            if url:
-                
-                button.append({"text":key, "url": url})
-                buttons.append(button)
-                button =[]
+            if url:       
+                row.append({"text":key, "url": url})
                 if len(row) == 2:
                     buttons.append(row)
                     row = []
         if row:
             buttons.append(row)
+        print(buttons)
 
 
         image_url=result.get("coverart")
