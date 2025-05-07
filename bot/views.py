@@ -122,7 +122,10 @@ def telegram_webhook(request):
         send_photo_with_button(chat_id,
                                 image_url,
                                 text,
-                                [[{"text": "MP3", "url": "https://example.com/mp3"}, {"text": "Apple Music", "url": "https://example.com/apple"}],[{"text": "Spotify", "url": "https://example.com/spotify"}, {"text": "YouTube_music", "url": "deezer-query://www.deezer.com/play?query=%7Btrack%3A%27Arms%27%20artist%3A%27Christina+Perri%27%7D"}],[{"text": "SoundCloud", "url": None}]]
+                                [[{"text": "MP3", "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/2f/42/a3/2f42a349-280a-0cc7-b407-f12a2b80578b/mzaf_10988835165761586862.plus.aac.ep.m4a"},\
+                                 {"text": "Apple Music", "url": "https://example.com/apple"}],[{"text": "Spotify", "url": "https://example.com/spotify"},\
+                                     {"text": "YouTube_music", "url": "deezer-query://www.deezer.com/play?query=%7Btrack%3A%27Arms%27%20artist%3A%27Christina+Perri%27%7D"}],\
+                                        [{"text": "SoundCloud", "url": None}]]
                                )
 
 
