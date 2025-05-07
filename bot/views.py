@@ -106,11 +106,15 @@ def telegram_webhook(request):
         row = []
         button_keys = ["mp3", "apple_music", "spotify", "youtube_music", "soundcloud"]
         for key in button_keys:
-            url = result.get(key, '')  
+            url = result.get(key, '') 
+            if not url:
+                url = "https://example.com" 
             row.append({"text":key, "url": url})
             if len(row) == 2:
                 buttons.append(row)
                 row = []
+            
+
         if row:
             buttons.append(row)
         print(buttons)
@@ -122,7 +126,7 @@ def telegram_webhook(request):
         send_photo_with_button(chat_id,
                                 image_url,
                                 text,
-                                [[{"text": "MP3", "url": "https://example.com/mp3"}, {"text": "Apple Music", "url": "https://example.com/apple"}],[{"text": "Spotify", "url": "https://example.com/spotify"}, {"text": "YouTube", "url": "https://example.com/youtube"}],[{"text": "SoundCloud", "url": "https://example.com/soundcloud"}]]
+                                buttons
                                )
 
 
